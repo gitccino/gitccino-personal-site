@@ -3,11 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "packageManager": "bun@1.3.14",
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "dev": "bun run --filter @gitccino/web dev",
     "build": "bun run --filter @gitccino/web build",
     "lint": "bun run --filter @gitccino/web lint",
-    "preview": "bun run --filter @gitccino/web preview"
+    "preview": "bun run --filter @gitccino/web preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1"
   }
 }
