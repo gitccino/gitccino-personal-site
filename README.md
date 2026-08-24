@@ -2,7 +2,7 @@
 
 # gitccino personal site
 
-Showing the real me, without the overselling
+Showing the real me, without the overselling but overengineering
 
 ## Stack
 
@@ -10,6 +10,9 @@ Showing the real me, without the overselling
 ![Vite](https://img.shields.io/badge/Vite-20232A?style=flat&logo=vite&logoColor=white)
 ![TanStack Router](https://img.shields.io/badge/TanStack_Router-20232A?style=flat&logo=tanstack&logoColor=white)
 ![Motion](https://img.shields.io/badge/Motion-20232A?style=flat&logo=framer&logoColor=white)
+![Elysia](https://img.shields.io/badge/Elysia-20232A?style=flat&logo=elysia&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-20232A?style=flat&logo=postgresql&logoColor=white)
+![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-20232A?style=flat&logo=drizzle&logoColor=white)
 
 ## Repository layout
 
@@ -27,6 +30,5 @@ infra/
 ```sh
 bun install
 bun run dev
-bun run lint
-bun run build
+bun run dev:api
 ```
