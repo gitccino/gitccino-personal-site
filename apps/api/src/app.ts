@@ -3,6 +3,7 @@ import { cors } from "@elysia/cors";
 
 import { visitorContext } from "./plugins/visitor";
 import { likesRoutes } from "./routes/like";
+import { commentsRoutes } from "./routes/comments";
 
 // /.*\.gitccino\.com$/
 const webOrigin = Bun.env.WEB_ORIGIN ?? "http://localhost:5173";
@@ -18,6 +19,7 @@ export const app = new Elysia()
   )
   .use(visitorContext)
   .use(likesRoutes)
+  .use(commentsRoutes)
   .get("/health", () => ({ status: "ok" }) as const, {
     response: t.Object({ status: t.Literal("ok") }),
   });
