@@ -12,7 +12,10 @@
     "lint": "bun run --filter @gitccino/web lint",
     "preview": "bun run --filter @gitccino/web preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f db"
   },
   "devDependencies": {
     "eslint-config-prettier": "^10.1.8",
