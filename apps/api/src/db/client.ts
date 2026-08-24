@@ -1,0 +1,12 @@
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+const databaseUrl = Bun.env.DATABASE_URL;
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL is required");
+}
+
+export const queryClient = postgres(databaseUrl);
+export const db = drizzle({
+  client: queryClient,
+});

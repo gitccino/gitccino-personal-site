@@ -7,13 +7,21 @@
     "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun test"
+    "test": "bun test",
+    "db:verify": "bun src/db/check.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:check": "drizzle-kit check",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "elysia": "^1.4.29"
+    "drizzle-orm": "^0.45.2",
+    "elysia": "^1.4.29",
+    "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@types/bun": "^1.4.0",
+    "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2"
   }
 }

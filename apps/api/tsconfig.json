@@ -19,5 +19,5 @@ Preserve = TS leaves them exactly as written and hands off to whatever runs next
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true
   },
-  "include": ["src"]
+  "include": ["src", "drizzle.config.ts"]
 }

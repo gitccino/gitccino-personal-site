@@ -15,7 +15,13 @@
     "format:check": "prettier --check .",
     "db:up": "docker compose up -d --wait db",
     "db:down": "docker compose down",
-    "db:logs": "docker compose logs -f db"
+    "db:logs": "docker compose logs -f db",
+    "dev:api": "bun --env-file=.env run --filter @gitccino/api dev",
+    "db:verify": "bun --env-file=.env run --filter @gitccino/api db:verify",
+    "db:generate": "bun --env-file=.env run --filter @gitccino/api db:generate",
+    "db:migrate": "bun --env-file=.env run --filter @gitccino/api db:migrate",
+    "db:check": "bun --env-file=.env run --filter @gitccino/api db:check",
+    "db:studio": "bun --env-file=.env run --filter @gitccino/api db:studio"
   },
   "devDependencies": {
     "eslint-config-prettier": "^10.1.8",
