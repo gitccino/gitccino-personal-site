@@ -21,7 +21,12 @@
     "db:generate": "bun --env-file=.env run --filter @gitccino/api db:generate",
     "db:migrate": "bun --env-file=.env run --filter @gitccino/api db:migrate",
     "db:check": "bun --env-file=.env run --filter @gitccino/api db:check",
-    "db:studio": "bun --env-file=.env run --filter @gitccino/api db:studio"
+    "db:studio": "bun --env-file=.env run --filter @gitccino/api db:studio",
+    "db:test:up": "docker compose up -d --wait db-test",
+    "db:test:down": "docker compose stop db-test",
+    "db:test:logs": "docker compose logs -f db-test",
+    "db:test:studio": "bun --env-file=.env run --filter @gitccino/api db:test:studio",
+    "test:integration": "bun run --filter @gitccino/api test:integration"
   },
   "devDependencies": {
     "eslint-config-prettier": "^10.1.8",

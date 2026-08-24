@@ -7,12 +7,14 @@
     "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun --env-file=../../.env test",
+    "test": "bun --env-file=../../.env test --path-ignore-patterns='src/test/integration/**'",
+    "test:integration": "bun --env-file=../../.env test --timeout 10000 --preload ./src/test/integration/setup.ts src/test/integration",
     "db:verify": "bun src/db/check.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:check": "drizzle-kit check",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:test:studio": "DATABASE_URL=\"$TEST_DATABASE_URL\" drizzle-kit studio"
   },
   "dependencies": {
     "@elysia/cors": "^1.4.2",

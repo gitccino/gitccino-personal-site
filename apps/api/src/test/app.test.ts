@@ -1,6 +1,19 @@
 import { describe, expect, it } from "bun:test";
 
-import { app } from "../app";
+import { createApp } from "../app";
+import type { RateLimiter } from "../plugins/rate-limit";
+
+const allowAllLimiter: RateLimiter = {
+  async limit() {
+    return {
+      success: true,
+      limit: 10_000,
+      remaining: 9_999,
+      reset: Date.now() + 60_000,
+    };
+  },
+};
+const app = createApp({ rateLimiter: allowAllLimiter });
 
 describe("GET /health", () => {
   it("returns the service status", async () => {

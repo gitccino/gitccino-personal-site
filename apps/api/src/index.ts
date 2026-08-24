@@ -1,5 +1,6 @@
-import { app } from "./app";
+import { createApp } from "./app";
 
+const app = createApp();
 const port = Number(Bun.env.PORT ?? 3000);
 
 if (!Number.isInteger(port) || port < 1 || port > 65535) {
