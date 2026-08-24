@@ -14,9 +14,11 @@
       "name": "@gitccino/api",
       "version": "0.0.0",
       "dependencies": {
+        "@elysia/cors": "^1.4.2",
         "drizzle-orm": "^0.45.2",
         "elysia": "^1.4.29",
         "postgres": "^3.4.9",
+        "zod": "^4.4.3",
       },
       "devDependencies": {
         "@types/bun": "^1.4.0",
@@ -135,6 +137,8 @@
     "@dotenvx/primitives": ["@dotenvx/primitives@0.8.0", "", {}, "sha512-VYJy0uhFm9zTJ1TxBaW/pA8bjbOM/OttaNMwZ1RHG4JKyRG7DhSdiqD1ipQoAyoD22olUtxbP78W9xY3Wd11bg=="],
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.10.2", "", {}, "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="],
+
+    "@elysia/cors": ["@elysia/cors@1.4.2", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-dXkfo1IxZWJkJReNYnPJorJqb+XpWno0D/YWlMEJSkiFIFd751zJ4R/YswAYdo88mLWo8cycEj673o7L+gbxsw=="],
 
     "@esbuild-kit/core-utils": ["@esbuild-kit/core-utils@3.3.2", "", { "dependencies": { "esbuild": "~0.18.20", "source-map-support": "^0.5.21" } }, "sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ=="],
 
