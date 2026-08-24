@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "dev": "bun run --filter @gitccino/web dev",
+    "dev:api": "bun --env-file=.env run --filter @gitccino/api dev",
     "build": "bun run --filter @gitccino/web build",
     "lint": "bun run --filter @gitccino/web lint",
     "preview": "bun run --filter @gitccino/web preview",
@@ -16,7 +17,6 @@
     "db:up": "docker compose up -d --wait db",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f db",
-    "dev:api": "bun --env-file=.env run --filter @gitccino/api dev",
     "db:verify": "bun --env-file=.env run --filter @gitccino/api db:verify",
     "db:generate": "bun --env-file=.env run --filter @gitccino/api db:generate",
     "db:migrate": "bun --env-file=.env run --filter @gitccino/api db:migrate",
