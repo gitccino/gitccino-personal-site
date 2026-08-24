@@ -4,6 +4,7 @@ import { cors } from "@elysia/cors";
 import { visitorContext } from "./plugins/visitor";
 import { likesRoutes } from "./routes/like";
 import { commentsRoutes } from "./routes/comments";
+import { createWriteRateLimiter } from "./plugins/rate-limit";
 
 // /.*\.gitccino\.com$/
 const webOrigin = Bun.env.WEB_ORIGIN ?? "http://localhost:5173";
@@ -17,6 +18,7 @@ export const app = new Elysia()
       allowedHeaders: ["Content-Type"],
     }),
   )
+  .use(createWriteRateLimiter())
   .use(visitorContext)
   .use(likesRoutes)
   .use(commentsRoutes)
