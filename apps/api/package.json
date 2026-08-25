@@ -12,6 +12,7 @@
     "db:verify": "bun src/db/check.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:migrate:runtime": "bun src/db/migrate.ts",
     "db:check": "drizzle-kit check",
     "db:studio": "drizzle-kit studio",
     "db:test:studio": "DATABASE_URL=\"$TEST_DATABASE_URL\" drizzle-kit studio"
