@@ -18,6 +18,25 @@ services:
       retries: 5 # Only accept 5 consecutive failures
       start_period: 10s # Give PostgreSQL 10 sec to initialize
 
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: gitccino-api:local
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:5173}
+      TRUST_PROXY: "false"
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL:-}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN:-}
+    ports:
+      - "${API_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
   db-test:
     image: postgres:18-alpine
     environment:
