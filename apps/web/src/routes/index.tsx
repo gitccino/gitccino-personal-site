@@ -2,11 +2,7 @@ import { useDisclosure } from "@/hooks/use-disclosure";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowRight01Icon,
-  GithubIcon,
-  GridViewIcon,
-} from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon, GithubIcon, GridViewIcon } from "@hugeicons/core-free-icons";
 import { LINKS } from "./__root";
 // import pfp from "@/assets/gitccino-pfp.png";
 import pfp from "@/assets/gitccino.gif";
@@ -52,20 +48,15 @@ function FECollapsible({ title, items }: FECollapsibleProps) {
   const shouldReduce = useReducedMotion();
 
   return (
-    <div className="w-full rounded-rm debug">
+    <div className="rounded-rm w-full debug">
       <div>
         <button
           {...getTriggerProps()}
           type="button"
-          className="w-full flex justify-start items-center gap-3"
+          className="flex w-full items-center justify-start gap-3"
         >
           <motion.span animate={{ rotate: isOpen ? 90 : 0 }}>
-            <HugeiconsIcon
-              icon={ArrowRight01Icon}
-              size={12}
-              color="currentColor"
-              strokeWidth={2}
-            />
+            <HugeiconsIcon icon={ArrowRight01Icon} size={12} color="currentColor" strokeWidth={2} />
           </motion.span>
           <p>{title}</p>
         </button>
@@ -82,18 +73,12 @@ function FECollapsible({ title, items }: FECollapsibleProps) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={
-              shouldReduce
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 300, damping: 30 }
+              shouldReduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
             }
           >
-            <div className="px-8 p-0 text-me-secondary-muted flex flex-col ">
+            <div className="flex flex-col p-0 px-8 text-me-secondary-muted">
               {items.map(({ to, label }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="w-fit whitespace-nowrap hover:text-me-secondary"
-                >
+                <Link key={to} to={to} className="w-fit whitespace-nowrap hover:text-me-secondary">
                   {label}
                 </Link>
               ))}
@@ -108,13 +93,7 @@ function FECollapsible({ title, items }: FECollapsibleProps) {
 type Field = (typeof FIELDS)[number];
 type Skill = { stackName: string; label: string; field: Field };
 
-const FIELDS = [
-  "Languages",
-  "Frontend",
-  "Backend & Data",
-  "Infrastructure",
-  "Other",
-] as const;
+const FIELDS = ["Languages", "Frontend", "Backend & Data", "Infrastructure", "Other"] as const;
 const SKILLSROW: Skill[] = [
   { stackName: "js", label: "JavaScript", field: "Languages" },
   { stackName: "typescript", label: "TypeScript", field: "Languages" },
@@ -150,28 +129,21 @@ export function Index() {
   const [selectedField, setSelectedField] = useState<string | null>(null);
 
   return (
-    <div className="p-2 space-y-10 debug">
-      <div className="debug w-full h-fit pb-20 flex flex-col items-center">
-        <img
-          src={pfp}
-          alt={`gitccino profile picture`}
-          className="size-16 shrink-0 object-cover"
-        />
+    <div className="space-y-10 p-2 debug">
+      <div className="flex h-fit w-full flex-col items-center pb-20 debug">
+        <img src={pfp} alt={`gitccino profile picture`} className="size-16 shrink-0 object-cover" />
         <div className="flex flex-col items-center">
           <p>
             hi. I'm{" "}
             <span className="highlighter-pen [--hl-color:var(--color-me-gray)]">
               Supitcha.
               <span className="absolute -top-6 left-full flex items-center text-me-secondary-muted/70">
-                <AnnArrow
-                  className="w-10 rotate-60 -rotate-y-180 mt-3"
-                  strokeWidth={1.5}
-                />
+                <AnnArrow className="mt-3 w-10 rotate-60 -rotate-y-180" strokeWidth={1.5} />
                 <a
                   href="https://www.linkedin.com/in/supitcha-klanpradit/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 whitespace-nowrap font-architect"
+                  className="inline-flex items-center gap-1.5 font-architect whitespace-nowrap"
                 >
                   {/*<HugeiconsIcon
                     icon={Linkedin02Icon}
@@ -181,7 +153,7 @@ export function Index() {
                   <img
                     src={LinkedinIcon}
                     alt={`LinkedIn logo`}
-                    className="size-5 grayscale opacity-30"
+                    className="size-5 opacity-30 grayscale"
                   />
                   linkedin/supitcha
                 </a>
@@ -190,89 +162,75 @@ export function Index() {
           </p>
           <p>
             I{" "}
-            <span className="relative highlighter-pen [--hl-color:var(--color-me-yellow)]">
+            <span className="highlighter-pen relative [--hl-color:var(--color-me-yellow)]">
               build things
-              <span className="absolute top-full left-1/2 -translate-x-1/2 flex flex-col items-center pt-1 text-me-secondary-muted/70">
-                <AnnArrow
-                  className="w-10 rotate-3 -scale-x-100"
-                  strokeWidth={1.5}
-                />
+              <span className="absolute top-full left-1/2 flex -translate-x-1/2 flex-col items-center pt-1 text-me-secondary-muted/70">
+                <AnnArrow className="w-10 -scale-x-100 rotate-3" strokeWidth={1.5} />
                 {/*<span className="whitespace-nowrap font-architect rotate-2">*/}
                 <a
                   href="https://github.com/gitccino"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 whitespace-nowrap font-architect rotate-2"
+                  className="inline-flex rotate-2 items-center gap-1 font-architect whitespace-nowrap"
                 >
-                  <HugeiconsIcon
-                    icon={GithubIcon}
-                    size={16}
-                    strokeWidth={2.5}
-                  />
+                  <HugeiconsIcon icon={GithubIcon} size={16} strokeWidth={2.5} />
                   github/gitccino
                 </a>
                 {/*</span>*/}
               </span>
             </span>{" "}
-            and trying new{" "}
-            <span className="text-me-secondary-muted line-through">shit</span>
+            and trying new <span className="text-me-secondary-muted line-through">shit</span>
           </p>
         </div>
       </div>
 
       <div className="space-y-8">
         <p className="text-xs text-me-secondary-muted">
-          Just put this together a couple of days ago. It's still rough and
-          there's a lot left to do. Come back soon.
+          Just put this together a couple of days ago. It's still rough and there's a lot left to
+          do. Come back soon.
         </p>
-        <p className="text-xs text-me-secondary-muted">
-          This is from the chore/nothing
-        </p>
+        <p className="text-xs text-me-secondary-muted">This is from the chore/nothing</p>
         <div className="space-y-2">
-          <p className="text-me-primary font-medium">About me</p>
+          <p className="font-medium text-me-primary">About me</p>
 
-          <div className="debug px-4 flex flex-col gap-1 text-sm">
+          <div className="flex flex-col gap-1 px-4 text-sm debug">
             {/*Self-taught full-stack engineer with ML engineering foundation*/}
             <p className="indent-8">
-              I once read a CVPR2020 paper more than ten times. Go through every
-              line of the paper, every line of its code, until{" "}
+              I once read a CVPR2020 paper more than ten times. Go through every line of the paper,
+              every line of its code, until{" "}
               <a
                 href="https://github.com/DreamtaleCore/USI3D/commit/b2a08094d6ccf12e1ba53d3f53d8618e34806a1a"
                 target="_blank"
                 rel="noreferrer"
               >
-                <span className="relative underline underline-offset-1 indent-0 highlighter-pen [--hl-color:var(--color-me-yellow)]">
+                <span className="highlighter-pen relative indent-0 underline underline-offset-1 [--hl-color:var(--color-me-yellow)]">
                   I found and fixed a bugs
                 </span>{" "}
               </a>
-              in the official code of a CVPR2020 paper. That's pretty much who I
-              am as a Deveoper.
+              in the official code of a CVPR2020 paper. That's pretty much who I am as a Deveoper.
             </p>
             <p className="indent-8">
-              I think Im a fast learner but I prefer slowly and thoroughly. That
-              instinct led me to find a bug in the code behind a CVPR 2020 paper
-              and in many situations led me to a better decisions.
+              I think Im a fast learner but I prefer slowly and thoroughly. That instinct led me to
+              find a bug in the code behind a CVPR 2020 paper and in many situations led me to a
+              better decisions.
             </p>
             <p className="indent-8">
-              Learning new stuffs, trying new shit that's all I have done for
-              the past five years and it's just the beginning.
+              Learning new stuffs, trying new shit that's all I have done for the past five years
+              and it's just the beginning.
             </p>
           </div>
         </div>
 
         <div className="space-y-2">
-          <p className="text-me-primary font-medium">Experience</p>
+          <p className="font-medium text-me-primary">Experience</p>
 
-          <div className="debug px-4 flex flex-col gap-1 text-sm">
+          <div className="flex flex-col gap-1 px-4 text-sm debug">
             <span>Internship Osaka University</span>
             <span>Prev. Machine Learning Engineer @AIGEN</span>
             <span>Web3 Founder & Full-Stack Engineer</span>
             <div>
               Independent Full-Stack Engineer{" "}
-              <Badge
-                variant="outline"
-                className="rounded-md bg-me-green border-0"
-              >
+              <Badge variant="outline" className="rounded-md border-0 bg-me-green">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#21A559] opacity-75"></span>
                   <span className="relative inline-flex size-1.5 rounded-full bg-[#21A559]"></span>
@@ -285,7 +243,7 @@ export function Index() {
 
         <div className="space-y-2">
           <div className="flex justify-between debug">
-            <p className="text-me-primary font-medium">Skills</p>
+            <p className="font-medium text-me-primary">Skills</p>
             <div className="flex gap-1">
               {/*<Combobox
                 items={GROUPS}
@@ -315,7 +273,7 @@ export function Index() {
               </Combobox>*/}
               {!enableMarquee && (
                 <Select value={selectedField} onValueChange={setSelectedField}>
-                  <SelectTrigger className="w-full max-w-48 bg-transparent shrink">
+                  <SelectTrigger className="w-full max-w-48 shrink bg-transparent">
                     <SelectValue placeholder="Highlight specific fields" />
                   </SelectTrigger>
                   <SelectContent align="end" alignItemWithTrigger={false}>
@@ -333,16 +291,11 @@ export function Index() {
                 aria-label="Toggle skills display layout"
                 size="icon"
                 variant="outline"
-                className="data-[state=on]:bg-me-green aria-pressed:bg-me-green shrink-0"
+                className="shrink-0 aria-pressed:bg-me-green data-[state=on]:bg-me-green"
                 pressed={!enableMarquee}
                 onPressedChange={(p) => setEnableMarquee(!p)}
               >
-                <HugeiconsIcon
-                  icon={GridViewIcon}
-                  size={14}
-                  color="currentColor"
-                  strokeWidth={2}
-                />
+                <HugeiconsIcon icon={GridViewIcon} size={14} color="currentColor" strokeWidth={2} />
               </Toggle>
             </div>
           </div>
@@ -350,10 +303,7 @@ export function Index() {
             <div className="relative">
               <Marquee pauseOnHover className="[--duration:20s]">
                 {SKILLSROW.map((row) => (
-                  <div
-                    key={row.stackName}
-                    className="debug flex items-center gap-1"
-                  >
+                  <div key={row.stackName} className="flex items-center gap-1 debug">
                     <StackIcon name={row.stackName} className="h-5 w-5" />
                     <p className="text-xs">{row.label}</p>
                   </div>
@@ -361,35 +311,26 @@ export function Index() {
               </Marquee>
               <Marquee reverse pauseOnHover className="[--duration:20s]">
                 {SKILLSROW2.map((row) => (
-                  <div
-                    key={row.stackName}
-                    className="debug flex items-center gap-1"
-                  >
+                  <div key={row.stackName} className="flex items-center gap-1 debug">
                     <StackIcon name={row.stackName} className="h-5 w-5" />
                     <p className="text-xs">{row.label}</p>
                   </div>
                 ))}
               </Marquee>
-              <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/10 bg-linear-to-r"></div>
-              <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/10 bg-linear-to-l"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/10 bg-linear-to-r from-background"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/10 bg-linear-to-l from-background"></div>
             </div>
           ) : (
             <div className="flex flex-wrap gap-x-2 gap-y-1">
               {[...SKILLSROW, ...SKILLSROW2].map((row) => {
-                const dim =
-                  selectedField !== null && row.field !== selectedField;
+                const dim = selectedField !== null && row.field !== selectedField;
                 return (
-                  <div
-                    key={row.stackName}
-                    className={`px-2 py-1 flex items-center gap-1 rounded`}
-                  >
+                  <div key={row.stackName} className={`flex items-center gap-1 rounded px-2 py-1`}>
                     <StackIcon
                       name={row.stackName}
-                      className={`h-5 w-5 shrink-0 ${dim ? "grayscale opacity-5" : ""}`}
+                      className={`h-5 w-5 shrink-0 ${dim ? "opacity-5 grayscale" : ""}`}
                     />
-                    <span
-                      className={`text-xs truncate ${dim ? "text-me-secondary-muted/10" : ""}`}
-                    >
+                    <span className={`truncate text-xs ${dim ? "text-me-secondary-muted/10" : ""}`}>
                       {row.label}
                     </span>
                   </div>
@@ -400,9 +341,7 @@ export function Index() {
         </div>
 
         <div className="space-y-2">
-          <p className="text-me-primary font-medium">
-            Below is me that keep exploring...
-          </p>
+          <p className="font-medium text-me-primary">Below is me that keep exploring...</p>
           <FECollapsible title={"Frontend & Design patterns"} items={LINKS} />
         </div>
       </div>

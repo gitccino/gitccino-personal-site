@@ -17,10 +17,7 @@ type DisclosureOptions = {
   onOpenChange?: (open: boolean) => void;
 };
 
-export function useDisclosure({
-  defaultOpen = false,
-  onOpenChange,
-}: DisclosureOptions = {}) {
+export function useDisclosure({ defaultOpen = false, onOpenChange }: DisclosureOptions = {}) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const id = useId();
   const triggerRef = useRef<HTMLElement>(null);
@@ -73,10 +70,7 @@ export function useDisclosure({
         id: `${id}-content`,
         "aria-labelledby": `${id}-trigger`,
         hidden: !isOpen,
-      }) as Omit<
-        P,
-        "onAnimationStart" | "onDrag" | "onDragStart" | "onDragEnd"
-      >,
+      }) as Omit<P, "onAnimationStart" | "onDrag" | "onDragStart" | "onDragEnd">,
     [isOpen, id],
   );
 

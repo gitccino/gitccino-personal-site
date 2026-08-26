@@ -1,11 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { Elysia } from "elysia";
 
-import {
-  requireVisitorId,
-  uuidV4Schema,
-  visitorContext,
-} from "../plugins/visitor";
+import { requireVisitorId, uuidV4Schema, visitorContext } from "../plugins/visitor";
 
 const visitorTestApp = new Elysia()
   .use(visitorContext)
@@ -16,9 +12,7 @@ const visitorTestApp = new Elysia()
 
 describe("visitor identity", () => {
   it("does not mint a cookie for GET", async () => {
-    const response = await visitorTestApp.handle(
-      new Request("http://localhost/visitor"),
-    );
+    const response = await visitorTestApp.handle(new Request("http://localhost/visitor"));
 
     expect(await response.json()).toEqual({ visitorId: null });
     expect(response.headers.get("set-cookie")).toBeNull();

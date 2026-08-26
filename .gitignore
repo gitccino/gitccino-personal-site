@@ -31,3 +31,5 @@ dist-ssr
 prep
 .tanstack/
 apps/web/src/assets/fonts
+
+.claude

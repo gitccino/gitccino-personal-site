@@ -167,10 +167,7 @@
         "likes_subject_key_visitor_id_unique": {
           "name": "likes_subject_key_visitor_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "subject_key",
-            "visitor_id"
-          ]
+          "columns": ["subject_key", "visitor_id"]
         }
       },
       "policies": {},
@@ -182,10 +179,7 @@
     "public.comment_status": {
       "name": "comment_status",
       "schema": "public",
-      "values": [
-        "visible",
-        "hidden"
-      ]
+      "values": ["visible", "hidden"]
     }
   },
   "schemas": {},

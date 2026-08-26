@@ -1,10 +1,6 @@
 import Elysia, { t } from "elysia";
 import { requireVisitorId, visitorContext } from "../plugins/visitor";
-import {
-  errorResponseSchema,
-  honeypotSchema,
-  subjectSchema,
-} from "../http/schemas";
+import { errorResponseSchema, honeypotSchema, subjectSchema } from "../http/schemas";
 import { db } from "../db/client";
 import { count, eq, and } from "drizzle-orm";
 import { likes } from "../db/schema";
@@ -40,14 +36,10 @@ async function getLikeState(subject: string, visitorId: string | null) {
 
 export const likesRoutes = new Elysia({ name: "likes-routes" })
   .use(visitorContext)
-  .get(
-    "/likes",
-    ({ query, visitorId }) => getLikeState(query.subject, visitorId),
-    {
-      query: t.Object({ subject: subjectSchema }),
-      response: likeResponseSchema,
-    },
-  )
+  .get("/likes", ({ query, visitorId }) => getLikeState(query.subject, visitorId), {
+    query: t.Object({ subject: subjectSchema }),
+    response: likeResponseSchema,
+  })
   .post(
     "/likes",
     async ({ body, visitorId, cookie: { visitor_id }, status }) => {
@@ -60,12 +52,7 @@ export const likesRoutes = new Elysia({ name: "likes-routes" })
       return db.transaction(async (transaction) => {
         const removedLikes = await transaction
           .delete(likes)
-          .where(
-            and(
-              eq(likes.subjectKey, body.subject),
-              eq(likes.visitorId, requiredVisitorId),
-            ),
-          )
+          .where(and(eq(likes.subjectKey, body.subject), eq(likes.visitorId, requiredVisitorId)))
           .returning({ id: likes.id });
 
         let liked = false;
