@@ -225,6 +225,9 @@ export function Index() {
           Just put this together a couple of days ago. It's still rough and
           there's a lot left to do. Come back soon.
         </p>
+        <p className="text-xs text-me-secondary-muted">
+          This is from the chore/nothing
+        </p>
         <div className="space-y-2">
           <p className="text-me-primary font-medium">About me</p>
 
