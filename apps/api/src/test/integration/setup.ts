@@ -13,9 +13,7 @@ if (!testDatabaseUrl) {
 const testDatabaseName = new URL(testDatabaseUrl).pathname.slice(1);
 
 if (testDatabaseName !== "gitccino_test") {
-  throw new Error(
-    `Refusing to run integration tests against ${testDatabaseName}`,
-  );
+  throw new Error(`Refusing to run integration tests against ${testDatabaseName}`);
 }
 
 Bun.env.DATABASE_URL = testDatabaseUrl;
@@ -31,12 +29,11 @@ const allowAllLimiter: RateLimiter = {
   },
 };
 
-const [{ createApp }, { db, queryClient }, { comments, likes }] =
-  await Promise.all([
-    import("../../app"),
-    import("../../db/client"),
-    import("../../db/schema"),
-  ]);
+const [{ createApp }, { db, queryClient }, { comments, likes }] = await Promise.all([
+  import("../../app"),
+  import("../../db/client"),
+  import("../../db/schema"),
+]);
 
 const app = createApp({ rateLimiter: allowAllLimiter });
 

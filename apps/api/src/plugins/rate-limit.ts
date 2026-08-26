@@ -18,10 +18,7 @@ export interface RateLimiter {
   }>;
 }
 
-type ClientKeyGenerator = (
-  request: Request,
-  server: Server<unknown> | null,
-) => string;
+type ClientKeyGenerator = (request: Request, server: Server<unknown> | null) => string;
 
 interface WriteRateLimiterOptions {
   limiter?: RateLimiter;
@@ -70,10 +67,7 @@ export function createWriteRateLimiter(options: WriteRateLimiterOptions = {}) {
       const key = generator(request, server);
       const { success, limit, remaining, reset } = await limiter.limit(key);
 
-      const retryAfterSeconds = Math.max(
-        0,
-        Math.ceil((reset - Date.now()) / 1000),
-      );
+      const retryAfterSeconds = Math.max(0, Math.ceil((reset - Date.now()) / 1000));
 
       set.headers["RateLimit-Limit"] = String(limit);
       set.headers["RateLimit-Remaining"] = String(remaining);

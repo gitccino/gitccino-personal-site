@@ -1,9 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import Elysia from "elysia";
-import {
-  createWriteRateLimiter,
-  type RateLimiter,
-} from "../plugins/rate-limit";
+import { createWriteRateLimiter, type RateLimiter } from "../plugins/rate-limit";
 
 // Deterministic in-memory sliding-ish window good enough for the hook tests
 function fakeLimiter(max: number): RateLimiter {
@@ -28,8 +25,7 @@ function createTestApp() {
     .use(
       createWriteRateLimiter({
         limiter: fakeLimiter(2),
-        generator: (request) =>
-          request.headers.get("x-test-client") ?? "anonymous",
+        generator: (request) => request.headers.get("x-test-client") ?? "anonymous",
       }),
     )
     .get("/likes", () => ({ ok: true }))
@@ -88,9 +84,7 @@ describe("write rate limiter", () => {
 
     for (let index = 0; index < 3; index += 1) {
       expect((await send(app, "/likes", "GET")).status).toBe(200);
-      expect((await send(app, "/comments/example-id", "DELETE")).status).toBe(
-        200,
-      );
+      expect((await send(app, "/comments/example-id", "DELETE")).status).toBe(200);
       expect((await send(app, "/health", "GET")).status).toBe(200);
     }
 

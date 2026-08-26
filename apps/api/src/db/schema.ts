@@ -1,17 +1,6 @@
-import {
-  pgTable,
-  text,
-  uuid,
-  timestamp,
-  unique,
-  index,
-  pgEnum,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, uuid, timestamp, unique, index, pgEnum } from "drizzle-orm/pg-core";
 
-export const commentStatusEnum = pgEnum("comment_status", [
-  "visible",
-  "hidden",
-]);
+export const commentStatusEnum = pgEnum("comment_status", ["visible", "hidden"]);
 
 export const likes = pgTable(
   "likes",
@@ -27,10 +16,7 @@ export const likes = pgTable(
       .notNull(),
   },
   (table) => [
-    unique("likes_subject_key_visitor_id_unique").on(
-      table.subjectKey,
-      table.visitorId,
-    ),
+    unique("likes_subject_key_visitor_id_unique").on(table.subjectKey, table.visitorId),
     index("likes_subject_key_idx").on(table.subjectKey),
   ],
 );

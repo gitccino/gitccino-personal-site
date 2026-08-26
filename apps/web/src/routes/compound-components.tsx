@@ -29,43 +29,31 @@ const compound = `<Tabs defaultValue="digest">
 </Tabs>`;
 
 const [htmlPropsSoup, htmlCompound] = await Promise.all(
-  [propsSoup, compound].map((code) =>
-    codeToHtml(code, { lang: "tsx", theme: "one-light" }),
-  ),
+  [propsSoup, compound].map((code) => codeToHtml(code, { lang: "tsx", theme: "one-light" })),
 );
 
-const code =
-  "[&_pre]:p-4 [&_pre]:text-xs [&_pre]:rounded-lg [&_pre]:overflow-x-auto";
+const code = "[&_pre]:p-4 [&_pre]:text-xs [&_pre]:rounded-lg [&_pre]:overflow-x-auto";
 
 export function RouteComponent() {
   return (
-    <div className="p-2 space-y-4 pb-100">
-      <p className="text-me-primary font-medium">
-        Understand Compound components
-      </p>
+    <div className="space-y-4 p-2 pb-100">
+      <p className="font-medium text-me-primary">Understand Compound components</p>
 
-      <div className="text-me-secondary space-y-3">
-        <div className="space-y-2 my-10">
+      <div className="space-y-3 text-me-secondary">
+        <div className="my-10 space-y-2">
           <p>
-            You build a tab component. Then someone needs X more configuration
-            options. So you add another prop to it. Now the component becomes a
-            black box that controls too much layout.
+            You build a tab component. Then someone needs X more configuration options. So you add
+            another prop to it. Now the component becomes a black box that controls too much layout.
           </p>
-          <div
-            className={code}
-            dangerouslySetInnerHTML={{ __html: htmlPropsSoup }}
-          />
+          <div className={code} dangerouslySetInnerHTML={{ __html: htmlPropsSoup }} />
         </div>
 
-        <div className="space-y-2 my-10">
+        <div className="my-10 space-y-2">
           <p>
-            Compound components hand the arrangement back to the consumer. Same
-            component, no config props.
+            Compound components hand the arrangement back to the consumer. Same component, no config
+            props.
           </p>
-          <div
-            className={code}
-            dangerouslySetInnerHTML={{ __html: htmlCompound }}
-          />
+          <div className={code} dangerouslySetInnerHTML={{ __html: htmlCompound }} />
           {/*<p>
             No <code className="highlighter">tabs</code> array, no{" "}
             <code className="highlighter">renderTab</code>, no className props.
@@ -76,15 +64,14 @@ export function RouteComponent() {
       </div>
 
       <blockquote>
-        Compound components expose structural control to the consumer (Gain
-        layout freedom), you lose the ability to enforce arrangement. Nothing
-        stops a consumer from omitting a Panel, and the parts are coupled by a{" "}
-        <code className="highlighter">value</code> string. A typo is a silent
-        no-op, not a type error.
+        Compound components expose structural control to the consumer (Gain layout freedom), you
+        lose the ability to enforce arrangement. Nothing stops a consumer from omitting a Panel, and
+        the parts are coupled by a <code className="highlighter">value</code> string. A typo is a
+        silent no-op, not a type error.
       </blockquote>
 
       <Tabs defaultValue="digest">
-        <Tabs.List className="space-x-2 flex justify-center p-10">
+        <Tabs.List className="flex justify-center space-x-2 p-10">
           <Tabs.Trigger value="digest">Digest</Tabs.Trigger>
           <Tabs.Trigger value="when-to-use">When to use</Tabs.Trigger>
         </Tabs.List>
@@ -97,13 +84,13 @@ export function RouteComponent() {
           cooperating components.
         </Tabs.Panel>*/}
         <Tabs.Panel value="digest">
-          Instead of cramming functionality into one component with dozens of
-          props, compound components distribute responsibility across multiple
-          cooperating parts that share state through context.
+          Instead of cramming functionality into one component with dozens of props, compound
+          components distribute responsibility across multiple cooperating parts that share state
+          through context.
         </Tabs.Panel>
         <Tabs.Panel value="when-to-use">
-          Suffering from Prop Bloat, you can't predict how consumers will
-          arrange the parts or UI layout needs to be highly flexible.
+          Suffering from Prop Bloat, you can't predict how consumers will arrange the parts or UI
+          layout needs to be highly flexible.
         </Tabs.Panel>
       </Tabs>
     </div>

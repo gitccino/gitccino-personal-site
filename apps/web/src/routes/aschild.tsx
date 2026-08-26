@@ -6,7 +6,7 @@ export const Route = createFileRoute("/aschild")({
 
 function RouteComponent() {
   return (
-    <div className="p-2 space-y-4 pb-100">
+    <div className="space-y-4 p-2 pb-100">
       <p className="font-medium">asChild: Understand the Slot pattern</p>
 
       <div className="space-y-3">
@@ -24,13 +24,13 @@ function RouteComponent() {
             <code className="highlighter">
               {"<"}Link{">"}
             </code>{" "}
-            for navigation, while maintaining the exact same styles, hover
-            states, and logic from the design system.
+            for navigation, while maintaining the exact same styles, hover states, and logic from
+            the design system.
           </p>
           <p>
-            You can solve this by using Polymorphic as prop pattern or the Slot
-            pattern. Your component provides the skin and behavior, while the
-            consumer provides the underlying element.
+            You can solve this by using Polymorphic as prop pattern or the Slot pattern. Your
+            component provides the skin and behavior, while the consumer provides the underlying
+            element.
           </p>
         </div>
       </div>

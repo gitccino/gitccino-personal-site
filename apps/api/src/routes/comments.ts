@@ -3,11 +3,7 @@ import { Elysia, t } from "elysia";
 import { requireVisitorId, visitorContext } from "../plugins/visitor";
 import { db } from "../db/client";
 import { comments } from "../db/schema";
-import {
-  errorResponseSchema,
-  honeypotSchema,
-  subjectSchema,
-} from "../http/schemas";
+import { errorResponseSchema, honeypotSchema, subjectSchema } from "../http/schemas";
 import { createAuthorName } from "../lib/author-name";
 
 const nullableUuidSchema = t.Union([t.String({ format: "uuid" }), t.Null()]);
@@ -22,10 +18,7 @@ const commentResponseSchema = t.Object({
   canDelete: t.Boolean(),
 });
 
-function toCommentResponse(
-  comment: typeof comments.$inferSelect,
-  visitorId: string | null,
-) {
+function toCommentResponse(comment: typeof comments.$inferSelect, visitorId: string | null) {
   return {
     id: comment.id,
     parentId: comment.parentId,
@@ -45,12 +38,7 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
       const rows = await db
         .select()
         .from(comments)
-        .where(
-          and(
-            eq(comments.subjectKey, query.subject),
-            eq(comments.status, "visible"),
-          ),
-        )
+        .where(and(eq(comments.subjectKey, query.subject), eq(comments.status, "visible")))
         .orderBy(desc(comments.createdAt), desc(comments.id));
 
       return rows.map((comment) => toCommentResponse(comment, visitorId));
@@ -122,9 +110,7 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
 
       const deletedComments = await db
         .delete(comments)
-        .where(
-          and(eq(comments.id, params.id), eq(comments.visitorId, visitorId)),
-        )
+        .where(and(eq(comments.id, params.id), eq(comments.visitorId, visitorId)))
         .returning({ id: comments.id });
 
       if (deletedComments.length === 0) {

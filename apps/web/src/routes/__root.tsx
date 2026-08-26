@@ -18,19 +18,14 @@ function toggleLayoutDebugging() {
 
 export const RootLayout = () => (
   <>
-    <div className="p-2 mt-4 md:mt-24 flex flex-wrap justify-between gap-x-4 gap-y-2">
+    <div className="mt-4 flex flex-wrap justify-between gap-x-4 gap-y-2 p-2 md:mt-24">
       <Button
         size="icon"
         variant="outline"
         render={(props) => <Link key="/" to="/" {...props}></Link>}
       >
         {/*<Link key="/" to="/">*/}
-        <HugeiconsIcon
-          icon={Home04Icon}
-          size={14}
-          color="currentColor"
-          strokeWidth={2}
-        />
+        <HugeiconsIcon icon={Home04Icon} size={14} color="currentColor" strokeWidth={2} />
         {/*</Link>*/}
       </Button>
       <Button
@@ -39,12 +34,7 @@ export const RootLayout = () => (
         onClick={toggleLayoutDebugging}
         className="debugging:bg-me-green"
       >
-        <HugeiconsIcon
-          icon={Bug02Icon}
-          size={14}
-          color="currentColor"
-          strokeWidth={2}
-        />
+        <HugeiconsIcon icon={Bug02Icon} size={14} color="currentColor" strokeWidth={2} />
       </Button>
       {/*{LINKS.map(({ to, label }) => (
         <Link

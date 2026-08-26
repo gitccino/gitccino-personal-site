@@ -12,17 +12,12 @@ export function Slot({ children, ...slotProps }: SlotProps) {
   }
 
   // Children.only throws on 0 or 2+ childrens — cheap validation
-  const child = Children.only(children) as React.ReactElement<
-    Record<string, unknown>
-  >;
+  const child = Children.only(children) as React.ReactElement<Record<string, unknown>>;
 
   return cloneElement(child, mergeProps(slotProps, child.props));
 }
 
-function mergeProps(
-  slotProps: Record<string, unknown>,
-  childProps: Record<string, unknown>,
-) {
+function mergeProps(slotProps: Record<string, unknown>, childProps: Record<string, unknown>) {
   const merged: Record<string, unknown> = {};
 
   for (const key of Object.keys(slotProps)) {

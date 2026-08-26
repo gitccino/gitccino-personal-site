@@ -280,13 +280,13 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply overflow-x-hidden bg-background text-foreground;
   }
   html {
-    @apply font-sans overflow-y-auto scrollbar-hide selection:bg-me-gray;
+    @apply scrollbar-hide overflow-y-auto font-sans selection:bg-me-gray;
   }
   blockquote {
-    @apply border-l-3 border-border pl-4 py-1 font-sans;
+    @apply border-l-3 border-border py-1 pl-4 font-sans;
   }
   :focus-visible {
     outline: 2px solid var(--color-border);
@@ -312,7 +312,7 @@ html.debug-on {
 }
 
 @utility highlighter {
-  @apply text-sm bg-me-cream px-1 py-0.5 mx-0.5 font-semibold border-border border rounded-sm;
+  @apply mx-0.5 rounded-sm border border-border bg-me-cream px-1 py-0.5 text-sm font-semibold;
 }
 
 @utility highlighter-pen {

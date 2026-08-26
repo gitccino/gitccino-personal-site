@@ -52,8 +52,7 @@ const FAQ = [
   },
   {
     question: "What's prop getters?",
-    answer:
-      "A function the hook gives you that returns a ready-made bundle of props to spread",
+    answer: "A function the hook gives you that returns a ready-made bundle of props to spread",
   },
 ];
 
@@ -62,12 +61,12 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const shouldReduce = useReducedMotion();
 
   return (
-    <div className="w-full text-sm bg-me-cream rounded-sm">
+    <div className="w-full rounded-sm bg-me-cream text-sm">
       <div>
         <button
           {...getTriggerProps()}
           type="button"
-          className="px-3 py-2 text-left w-full flex justify-between items-center"
+          className="flex w-full items-center justify-between px-3 py-2 text-left"
         >
           <p>{question}</p>
           {/*<span className="text-me-muted" aria-hidden>
@@ -77,17 +76,10 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
             className="text-me-muted"
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={
-              shouldReduce
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 300, damping: 30 }
+              shouldReduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
             }
           >
-            <HugeiconsIcon
-              icon={ArrowDown01Icon}
-              size={12}
-              color="currentColor"
-              strokeWidth={2}
-            />
+            <HugeiconsIcon icon={ArrowDown01Icon} size={12} color="currentColor" strokeWidth={2} />
           </motion.span>
         </button>
       </div>
@@ -110,9 +102,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={
-              shouldReduce
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 300, damping: 30 }
+              shouldReduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
             }
           >
             <div className="px-4 pb-2 text-me-secondary-muted">{answer}</div>
@@ -134,11 +124,11 @@ function UserMenu({
   const shouldReduce = useReducedMotion();
 
   return (
-    <div className="relative flex flex-col justify-center items-center gap-1">
+    <div className="relative flex flex-col items-center justify-center gap-1">
       <button
         // role="button"
         {...getTriggerProps()}
-        className="flex items-center gap-2 cursor-pointer"
+        className="flex cursor-pointer items-center gap-2"
       >
         <img
           src={user.avatar}
@@ -152,27 +142,25 @@ function UserMenu({
           <motion.ul
             {...getContentProps()}
             role="menu"
-            className="overflow-hidden absolute top-15 p-1 w-30 text-xs rounded-sm border border-border"
+            className="absolute top-15 w-30 overflow-hidden rounded-sm border border-border p-1 text-xs"
 
             hidden={undefined}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={
-              shouldReduce
-                ? { duration: 0 }
-                : { type: "spring", stiffness: 300, damping: 30 }
+              shouldReduce ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
             }
           >
             <li
               role="menuitem"
-              className="px-1 p-0.5 rounded text-me-secondary-muted hover:text-me-secondary cursor-pointer"
+              className="cursor-pointer rounded p-0.5 px-1 text-me-secondary-muted hover:text-me-secondary"
             >
               Settings
             </li>
             <li
               role="menuitem"
-              className="px-1 p-0.5 rounded text-me-secondary-muted hover:text-me-secondary cursor-pointer"
+              className="cursor-pointer rounded p-0.5 px-1 text-me-secondary-muted hover:text-me-secondary"
             >
               Sign Out
             </li>
@@ -185,43 +173,37 @@ function UserMenu({
 
 export function RouteComponent() {
   return (
-    <div className="p-2 space-y-4 pb-100">
-      <p className="text-me-primary font-medium">
-        Implementing Behavior-only headless hook
-      </p>
+    <div className="space-y-4 p-2 pb-100">
+      <p className="font-medium text-me-primary">Implementing Behavior-only headless hook</p>
       {/* ponytail: input is a literal, and Shiki escapes the code it wraps. */}
-      <div className=" text-me-secondary space-y-3">
-        <div className="space-y-2 my-10">
+      <div className="space-y-3 text-me-secondary">
+        <div className="my-10 space-y-2">
           <p>Monday you build the FAQ.</p>
           <div
-            className="[&_pre]:p-4 [&_pre]:text-xs [&_pre]:rounded-lg [&_pre]:overflow-x-auto"
+            className="[&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:text-xs"
             dangerouslySetInnerHTML={{ __html: htmlFagItem }}
           />
         </div>
 
-        <div className="space-y-2 my-10">
-          <p>
-            Wednesday you build the user menu and so on the third one on Friday.
-          </p>
+        <div className="my-10 space-y-2">
+          <p>Wednesday you build the user menu and so on the third one on Friday.</p>
           <div
-            className="[&_pre]:p-4 [&_pre]:text-xs [&_pre]:rounded-lg [&_pre]:overflow-x-auto"
+            className="[&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:text-xs"
             dangerouslySetInnerHTML={{ __html: htmlUseMenu }}
           />
         </div>
 
         <blockquote>Escape key should close these</blockquote>
         <p>
-          Now you edit both file. Add the same{" "}
-          <code className="highlighter">onKeyDown</code> twice. Miss a third one
-          someone built in another folder. Instead you create a headless hook to
-          hold the logic in one place. Add prop-getter on top that hands you the
-          wiring pre-assembled, as an object to spread.
+          Now you edit both file. Add the same <code className="highlighter">onKeyDown</code> twice.
+          Miss a third one someone built in another folder. Instead you create a headless hook to
+          hold the logic in one place. Add prop-getter on top that hands you the wiring
+          pre-assembled, as an object to spread.
         </p>
         <p>
-          With the behavior-only headless hook, behavior is extracted from
-          presentation, exposed via prop getters. Below is the{" "}
-          <code className="highlighter">FaqItem</code> component built with{" "}
-          <code className="highlighter">useDisclosure</code>
+          With the behavior-only headless hook, behavior is extracted from presentation, exposed via
+          prop getters. Below is the <code className="highlighter">FaqItem</code> component built
+          with <code className="highlighter">useDisclosure</code>
         </p>
 
         <div className="flex flex-col gap-1 px-4 py-10">
@@ -231,11 +213,11 @@ export function RouteComponent() {
         </div>
 
         <p>
-          Now let's try build the <code className="highlighter">UserMenu</code>{" "}
-          using our headless hook
+          Now let's try build the <code className="highlighter">UserMenu</code> using our headless
+          hook
         </p>
 
-        <div className="flex justify-center items-center p-10">
+        <div className="flex items-center justify-center p-10">
           <UserMenu
             user={{ name: "gitccino", avatar: pfp }}
             // onOpenTracked={() => console.log("tracking...")}

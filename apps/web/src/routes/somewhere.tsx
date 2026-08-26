@@ -5,5 +5,5 @@ export const Route = createFileRoute("/somewhere")({
 });
 
 function RouteComponent() {
-  return <div className="p-2 space-y-4">Somewhere :)</div>;
+  return <div className="space-y-4 p-2">Somewhere :)</div>;
 }

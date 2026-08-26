@@ -3,8 +3,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
 const hasUpstash =
-  Boolean(Bun.env.UPSTASH_REDIS_REST_URL) &&
-  Boolean(Bun.env.UPSTASH_REDIS_REST_TOKEN);
+  Boolean(Bun.env.UPSTASH_REDIS_REST_URL) && Boolean(Bun.env.UPSTASH_REDIS_REST_TOKEN);
 const maybe = hasUpstash ? describe : describe.skip;
 
 maybe("Upstash sliding window", () => {

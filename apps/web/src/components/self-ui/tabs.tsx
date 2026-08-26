@@ -13,8 +13,7 @@ const TabsContext = createContext<TabsCtx | null>(null);
 
 function useTabs() {
   const ctx = useContext(TabsContext);
-  if (!ctx)
-    throw Error(`Tabs compound components must be used within Tabs.Root`);
+  if (!ctx) throw Error(`Tabs compound components must be used within Tabs.Root`);
   return ctx;
 }
 
@@ -25,12 +24,7 @@ type TabsProps = {
   onValueChange?: (v: string) => void;
 };
 
-export function Tabs({
-  children,
-  defaultValue = "",
-  value,
-  onValueChange,
-}: TabsProps) {
+export function Tabs({ children, defaultValue = "", value, onValueChange }: TabsProps) {
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
   const baseId = useId();
 

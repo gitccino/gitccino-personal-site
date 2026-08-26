@@ -24,12 +24,7 @@ type TabsProps = {
   onValueChange?: (v: string) => void;
 };
 
-export function Tabs({
-  children,
-  defaultValue = "",
-  value,
-  onValueChange,
-}: TabsProps) {
+export function Tabs({ children, defaultValue = "", value, onValueChange }: TabsProps) {
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
   const baseId = useId();
 
@@ -59,13 +54,7 @@ type TriggerProps = React.ComponentPropsWithoutRef<"button"> & {
   value: string;
 };
 
-function Trigger({
-  value,
-  children,
-  onClick,
-  onKeyDown,
-  ...rest
-}: TriggerProps) {
+function Trigger({ value, children, onClick, onKeyDown, ...rest }: TriggerProps) {
   const tabs = useTabs("Tabs.Trigger");
   const selected = tabs.value === value;
 
@@ -92,11 +81,7 @@ function Trigger({
           const items = Array.from(
             tabList?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? [],
           );
-          const next =
-            items[
-              (items.indexOf(e.currentTarget) + dir + items.length) %
-                items.length
-            ];
+          const next = items[(items.indexOf(e.currentTarget) + dir + items.length) % items.length];
           next?.focus();
           next?.click();
         }

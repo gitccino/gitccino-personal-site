@@ -14,7 +14,7 @@
     "api:docker:stop": "docker compose stop api",
     "api:docker:logs": "docker compose logs -f api",
     "api:docker:migrate": "docker compose run --rm api bun run db:migrate:runtime",
-    "build": "bun   --filter @gitccino/web build",
+    "build": "bun --filter @gitccino/web build",
     "lint": "bun run --filter @gitccino/web lint",
     "preview": "bun run --filter @gitccino/web preview",
     "format": "prettier --write .",
@@ -31,11 +31,13 @@
     "db:test:down": "docker compose stop db-test",
     "db:test:logs": "docker compose logs -f db-test",
     "db:test:studio": "bun --env-file=.env run --filter @gitccino/api db:test:studio",
+    "test:api": "bun run --filter @gitccino/api test",
     "test:integration": "bun run --filter @gitccino/api test:integration"
   },
   "devDependencies": {
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.6",
+    "prettier-plugin-sh": "^0.19.0",
     "prettier-plugin-tailwindcss": "^0.8.1"
   }
 }

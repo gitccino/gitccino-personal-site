@@ -33,12 +33,7 @@ export function Button<T extends React.ElementType = "button">({
     sm: "text-sm/relaxed",
     md: "text-base/relaxed",
   };
-  const classNames = [
-    className,
-    baseClasses,
-    variantClasses[variant],
-    sizeClasses[size],
-  ].join(" ");
+  const classNames = [className, baseClasses, variantClasses[variant], sizeClasses[size]].join(" ");
   return (
     <Component className={classNames} {...props}>
       {children}

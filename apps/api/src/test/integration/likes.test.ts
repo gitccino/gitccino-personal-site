@@ -35,12 +35,7 @@ describe("likes API", () => {
       liked: true,
     });
 
-    const unliked = await jsonRequest(
-      "/likes",
-      "POST",
-      { subject: "home", website: "" },
-      cookie,
-    );
+    const unliked = await jsonRequest("/likes", "POST", { subject: "home", website: "" }, cookie);
 
     expect(unliked.status).toBe(200);
     expect(await unliked.json()).toEqual({
