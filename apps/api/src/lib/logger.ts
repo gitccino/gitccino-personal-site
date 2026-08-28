@@ -5,7 +5,7 @@ export const logger = pino({
   // deafult metadata that attach to every JSON log line
   base: {
     service: "gitccino-api",
-    environment: Bun.env.SETRY_ENVIRONMENT ?? Bun.env.NODE_ENV ?? "development",
+    environment: Bun.env.SENTRY_ENVIRONMENT ?? Bun.env.NODE_ENV ?? "development",
   },
   serializers: {
     err: pino.stdSerializers.err,
