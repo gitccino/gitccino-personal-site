@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "bun run --filter @gitccino/web dev",
     "dev:api": "bun --env-file=.env run --filter @gitccino/api dev",
+    "api:typecheck": "bun run --filter @gitccino/api typecheck",
     "api:docker:build": "docker compose build api",
     "api:docker:up": "docker compose up -d --wait api",
     "api:docker:stop": "docker compose stop api",

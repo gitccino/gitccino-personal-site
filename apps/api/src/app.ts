@@ -18,6 +18,7 @@ interface CreateAppOptions {
 
 export function createApp(options: CreateAppOptions = {}) {
   return new Elysia()
+    .use(observability)
     .use(
       cors({
         origin: webOrigin,
