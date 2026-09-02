@@ -15,6 +15,7 @@ const allowAllLimiter: RateLimiter = {
 };
 const app = createApp({ rateLimiter: allowAllLimiter });
 
+// Health check temporary
 describe("GET /health", () => {
   it("returns the service status", async () => {
     const response = await app.handle(new Request("http://localhost/health"));
@@ -23,5 +24,16 @@ describe("GET /health", () => {
     expect(await response.json()).toEqual({
       status: "ok",
     });
+  });
+});
+
+// Health check
+describe("GET /health/live", () => {
+  it("returns the process status and a request ID", async () => {
+    const response = await app.handle(new Request("http://localhost/health/live"));
+    expect(response.status).toBe(200);
+    // check generated `requestId` UUID that `onRequest` hook intercepted
+    expect(response.headers.get("x-request-id")).not.toBeNull();
+    expect(await response.json()).toEqual({ status: "ok" });
   });
 });

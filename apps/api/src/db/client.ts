@@ -7,6 +7,13 @@ if (!databaseUrl) {
 }
 
 export const queryClient = postgres(databaseUrl);
+
+export const readinessClient = postgres(databaseUrl, {
+  max: 1,
+  connect_timeout: 1,
+  prepare: false, // Disables PostgreSQL prepared statement caching for this client
+});
+
 export const db = drizzle({
   client: queryClient,
 });
