@@ -4,6 +4,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { createRootRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useLikes, useToggleLike } from "@/hooks/api/use-likes";
 import { toSubject } from "@/lib/api/subject";
+import { Thread } from "@/components/self-ui/thread";
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 export const LINKS = [
@@ -78,6 +79,34 @@ export const RootLayout = () => {
 
       <div className="pb-40">
         <Outlet />
+        <Thread subject={subject}>
+          <Thread.Composer />
+          <Thread.List>
+            {(thread) => (
+              <article key={thread.root.id}>
+                <Thread.Item comment={thread.root}>
+                  <Thread.Header />
+                  <Thread.Body />
+                  <Thread.Actions />
+                  {thread.replies.length > 0 && (
+                    <Thread.Replies>
+                      {thread.replies.map((reply) => (
+                        <article key={reply.id} className="mb-3 last:mb-0">
+                          <Thread.Item comment={reply}>
+                            <Thread.Header />
+                            <Thread.Body />
+                            <Thread.Actions />
+                          </Thread.Item>
+                        </article>
+                      ))}
+                    </Thread.Replies>
+                  )}
+                  <Thread.Composer parentId={thread.root.id} />
+                </Thread.Item>
+              </article>
+            )}
+          </Thread.List>
+        </Thread>
       </div>
       {/*<TanStackRouterDevtools />*/}
     </>
