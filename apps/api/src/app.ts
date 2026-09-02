@@ -24,7 +24,8 @@ export function createApp(options: CreateAppOptions = {}) {
         origin: webOrigin,
         methods: ["GET", "POST", "DELETE", "OPTIONS"],
         credentials: true,
-        allowedHeaders: ["Content-Type"],
+        allowedHeaders: ["Content-Type", "X-Request-ID"],
+        exposeHeaders: ["X-Request-ID"],
       }),
     )
     .use(createWriteRateLimiter({ limiter: options.rateLimiter }))

@@ -5,10 +5,10 @@
     "": {
       "name": "gitccino",
       "devDependencies": {
-        "eslint-config-prettier": "^10.1.8",
-        "prettier": "^3.9.6",
-        "prettier-plugin-sh": "^0.19.0",
-        "prettier-plugin-tailwindcss": "^0.8.1",
+        "eslint-config-prettier": "latest",
+        "prettier": "latest",
+        "prettier-plugin-sh": "latest",
+        "prettier-plugin-tailwindcss": "latest",
       },
     },
     "apps/api": {

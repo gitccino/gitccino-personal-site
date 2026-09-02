@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/bun";
 
 import { createApp } from "./app";
-import { queryClient } from "./db/client";
+import { queryClient, readinessClient } from "./db/client";
 import { logger } from "./lib/logger";
 
 // api require Upstash
@@ -41,8 +41,11 @@ async function shutdown(signal: "SIGINT" | "SIGTERM") {
 
   // Promise.allSettled guarantees both operations complete
   // Promise.all, en error closing db would immediately reject and abort before Sentry finish flushing
-  const [databaseResult, sentryResult] = await Promise.allSettled([
+  const [databaseResult, readinessResult, sentryResult] = await Promise.allSettled([
     queryClient.end({ timeout: 5 }),
+    readinessClient.end({ timeout: 5 }),
+    // Sentry.close resolves to false when the flush times out,
+    // it only rejects on unexpected errors
     Sentry.close(2_000),
   ]);
 
@@ -50,8 +53,14 @@ async function shutdown(signal: "SIGINT" | "SIGTERM") {
     logger.error({ err: databaseResult.reason }, "database shutdown failed");
   }
 
+  if (readinessResult.status === "rejected") {
+    logger.error({ err: readinessResult.reason }, "readiness pool shutdown failed");
+  }
+
   if (sentryResult.status === "rejected") {
     logger.error({ err: sentryResult.reason }, "Sentry flush failed");
+  } else if (sentryResult.value === false) {
+    logger.error({ signal }, "Sentry flush timed out; queued events may be lost");
   }
 
   logger.info({ signal }, "shutdown completed");

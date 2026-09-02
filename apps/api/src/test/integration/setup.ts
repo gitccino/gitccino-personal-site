@@ -29,11 +29,8 @@ const allowAllLimiter: RateLimiter = {
   },
 };
 
-const [{ createApp }, { db, queryClient }, { comments, likes }] = await Promise.all([
-  import("../../app"),
-  import("../../db/client"),
-  import("../../db/schema"),
-]);
+const [{ createApp }, { db, queryClient, readinessClient }, { comments, likes }] =
+  await Promise.all([import("../../app"), import("../../db/client"), import("../../db/schema")]);
 
 const app = createApp({ rateLimiter: allowAllLimiter });
 
@@ -49,7 +46,21 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await queryClient.end({ timeout: 5 });
+  // await queryClient.end({ timeout: 5 });
+  // await readinessClient.end({ timeout: 5 });
+
+  const results = await Promise.allSettled([
+    queryClient.end({ timeout: 5 }),
+    readinessClient.end({ timeout: 5 }),
+  ]);
+
+  const failures = results
+    .filter((result) => result.status === "rejected")
+    .map((result) => result.reason);
+
+  if (failures.length > 0) {
+    throw new AggregateError(failures, "Database teardown failed");
+  }
 });
 
 export { app, db };
