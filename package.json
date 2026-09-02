@@ -23,7 +23,6 @@
     "format:check": "prettier --check .",
     "db:up": "docker compose up -d --wait db",
     "db:down": "docker compose stop db",
-    "db:reset": "docker compose rm -sf db && docker compose up -d --wait db",
     "db:logs": "docker compose logs -f db",
     "db:verify": "bun --env-file=.env run --filter @gitccino/api db:verify",
     "db:generate": "bun --env-file=.env run --filter @gitccino/api db:generate",

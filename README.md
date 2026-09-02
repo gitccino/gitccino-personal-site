@@ -33,8 +33,7 @@ bun run dev
 bun run dev:api
 ```
 
-| Script     | Behavior                         | When |
-| :--------- | :------------------------------- | :--- |
-| `db:up`    | start + wait healthy             |
-| `db:down`  | stop only                        |
-| `db:reset` | remove + recreate + wait healthy |
+| Script    | Behavior             | When |
+| :-------- | :------------------- | :--- |
+| `db:up`   | start + wait healthy |
+| `db:down` | stop only            |

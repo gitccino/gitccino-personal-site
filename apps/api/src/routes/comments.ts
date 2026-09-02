@@ -63,6 +63,25 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
 
       const requiredVisitorId = requireVisitorId(visitorId, visitor_id!);
 
+      if (input.parentId) {
+        const parents = await db
+          .select({ parentId: comments.parentId, subjectKey: comments.subjectKey, status: comments.status })
+          .from(comments)
+          .where(eq(comments.id, input.parentId))
+          .limit(1);
+        const parent = parents[0];
+
+        if (!parent || parent.status !== "visible") {
+          return status(400, { error: "Parent comment not found" });
+        }
+        if (parent.subjectKey !== input.subject) {
+          return status(400, { error: "Parent comment belongs to another subject" });
+        }
+        if (parent.parentId !== null) {
+          return status(400, { error: "Replies cannot be nested" });
+        }
+      }
+
       // retrieve the prev author name if existed
       const priorComments = await db
         .select({ authorName: comments.authorName })
@@ -76,6 +95,7 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
         .insert(comments)
         .values({
           subjectKey: input.subject,
+          parentId: input.parentId ?? null,
           authorName,
           body: normalizeBody,
           visitorId: requiredVisitorId,
@@ -93,6 +113,7 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
       body: t.Object({
         subject: subjectSchema,
         body: t.String({ minLength: 1, maxLength: 2000 }),
+        parentId: t.Optional(t.String({ format: "uuid" })),
         website: honeypotSchema,
       }),
       response: {
