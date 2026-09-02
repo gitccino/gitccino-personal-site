@@ -20,7 +20,7 @@ Sentry.init({
   sendDefaultPii: false,
 
   // // Add Performance Monitoring by setting tracesSampleRate
-  // tracesSampleRate: 1.0,
+  tracesSampleRate: 1.0,
 
   // // Just in case enabling tracesSampleRate
   // tracesSampler({ attributes, inheritOrSampleWith }) {

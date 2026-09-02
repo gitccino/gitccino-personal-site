@@ -5,6 +5,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -16,8 +17,10 @@ declare module "@tanstack/react-router" {
   }
 }
 
+const queryClient = new QueryClient();
+
 // ponytail: dev-only layout inspector, Ctrl+D
-addEventListener("keydown", (e) => {
+window.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.key === "d") {
     e.preventDefault();
     document.documentElement.classList.toggle("debug-on");
@@ -30,7 +33,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>,
   );
 }

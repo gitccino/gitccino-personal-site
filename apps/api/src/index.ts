@@ -19,6 +19,25 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
   throw new Error("PORT must contain a valid port number");
 }
 
+// Dev-only boot preflight. Postgres.js connects lazily, so the server starts
+// silently even with the database down and only fails on the first query.
+// In production this must keep booting (ECS health checks expect readiness to
+// recover), so the exit-fast behavior is gated on the dev script's flag.
+if (Bun.env.API_BOOT_CHECK === "1") {
+  const preflight = await queryClient`select 1`.execute().then(
+    () => true,
+    (err) => err,
+  );
+
+  if (preflight instanceof Error) {
+    logger.error({ err: preflight }, "Postgres unreachable at boot");
+    console.error("hint: run `bun run db:up` (or check DATABASE_URL in .env)");
+    process.exit(1);
+  }
+
+  logger.info("Postgres reachable at boot");
+}
+
 app.listen(port);
 
 logger.info(

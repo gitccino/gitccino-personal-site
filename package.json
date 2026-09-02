@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "bun run --filter @gitccino/web dev",
     "dev:api": "bun --env-file=.env run --filter @gitccino/api dev",
+    "dev:all": "concurrently -n api,web -c blue,green \"bun run dev:api\" \"bun run dev\"",
     "api:typecheck": "bun run --filter @gitccino/api typecheck",
     "api:docker:build": "docker compose build api",
     "api:docker:up": "docker compose up -d --wait api",
@@ -21,7 +22,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:up": "docker compose up -d --wait db",
-    "db:down": "docker compose down",
+    "db:down": "docker compose stop db",
+    "db:reset": "docker compose rm -sf db && docker compose up -d --wait db",
     "db:logs": "docker compose logs -f db",
     "db:verify": "bun --env-file=.env run --filter @gitccino/api db:verify",
     "db:generate": "bun --env-file=.env run --filter @gitccino/api db:generate",
@@ -36,6 +38,7 @@
     "test:integration": "bun run --filter @gitccino/api test:integration"
   },
   "devDependencies": {
+    "concurrently": "^10.0.5",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.6",
     "prettier-plugin-sh": "^0.19.0",
