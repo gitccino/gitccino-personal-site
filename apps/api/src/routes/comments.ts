@@ -13,20 +13,23 @@ const commentResponseSchema = t.Object({
   parentId: nullableUuidSchema,
   authorName: t.String(),
   body: t.String(),
+  deleted: t.Boolean(),
   createdAt: t.String({ format: "date-time" }),
   updatedAt: t.String({ format: "date-time" }),
   canDelete: t.Boolean(),
 });
 
 function toCommentResponse(comment: typeof comments.$inferSelect, visitorId: string | null) {
+  const deleted = comment.status === "hidden";
   return {
     id: comment.id,
     parentId: comment.parentId,
     authorName: comment.authorName,
     body: comment.body,
+    deleted,
     createdAt: comment.createdAt.toISOString(),
     updatedAt: comment.updatedAt.toISOString(),
-    canDelete: visitorId === comment.visitorId,
+    canDelete: deleted ? false : visitorId === comment.visitorId,
   };
 }
 
@@ -38,10 +41,17 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
       const rows = await db
         .select()
         .from(comments)
-        .where(and(eq(comments.subjectKey, query.subject), eq(comments.status, "visible")))
+        .where(eq(comments.subjectKey, query.subject))
         .orderBy(desc(comments.createdAt), desc(comments.id));
 
-      return rows.map((comment) => toCommentResponse(comment, visitorId));
+      const parentsWithReplies = new Set(
+        rows.filter((r) => r.parentId && r.status === "visible").map((r) => r.parentId!),
+      );
+      const visible = rows.filter(
+        (r) => r.status === "visible" || parentsWithReplies.has(r.id),
+      );
+
+      return visible.map((comment) => toCommentResponse(comment, visitorId));
     },
     {
       query: t.Object({ subject: subjectSchema }),
@@ -129,6 +139,25 @@ export const commentsRoutes = new Elysia({ name: "comments-routes" })
         return status(401, { error: "Visitor identity required" });
       }
 
+      // A root with visible replies is hidden, not removed.
+      const replies = await db
+        .select({ id: comments.id })
+        .from(comments)
+        .where(and(eq(comments.parentId, params.id), eq(comments.status, "visible")))
+        .limit(1);
+
+      if (replies.length > 0) {
+        const hidden = await db
+          .update(comments)
+          .set({ body: "", status: "hidden", updatedAt: new Date() })
+          .where(and(eq(comments.id, params.id), eq(comments.visitorId, visitorId)))
+          .returning({ id: comments.id });
+
+        if (hidden.length === 0) return status(404, { error: "Comment not found" });
+        return { deleted: true } as const;
+      }
+
+      // Leaf: hard-delete.
       const deletedComments = await db
         .delete(comments)
         .where(and(eq(comments.id, params.id), eq(comments.visitorId, visitorId)))
