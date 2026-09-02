@@ -32,3 +32,8 @@ bun install
 bun run dev
 bun run dev:api
 ```
+
+| Script    | Behavior             | When |
+| :-------- | :------------------- | :--- |
+| `db:up`   | start + wait healthy |
+| `db:down` | stop only            |

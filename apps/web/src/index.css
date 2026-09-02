@@ -74,6 +74,8 @@
   --color-me-green: #d7f1de;
   --color-me-gray: #e4e7ea; /* #acb2be50; */
   --color-me-cream: #fafafa;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 :root {

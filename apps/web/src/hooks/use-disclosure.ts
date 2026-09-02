@@ -5,7 +5,6 @@ function compose<E extends React.SyntheticEvent>(
   theirs: ((e: E) => void) | undefined,
   ours: (e: E) => void,
 ) {
-  console.log("compose");
   return (e: E) => {
     theirs?.(e);
     if (!e.defaultPrevented) ours(e);

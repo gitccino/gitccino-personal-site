@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 import type {
   PreHandler, // For .onRequest()
   ErrorHandler, // For .onError()
-  AfterResponseHandler, // For .onAfterResponse()
+  // AfterResponseHandler, // For .onAfterResponse()
 } from "elysia";
 import { logger } from "../lib/logger";
 

@@ -37,3 +37,5 @@ export function createApp(options: CreateAppOptions = {}) {
       response: t.Object({ status: t.Literal("ok") }),
     });
 }
+
+export type App = ReturnType<typeof createApp>;
