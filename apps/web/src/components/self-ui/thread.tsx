@@ -114,6 +114,7 @@ export function Thread({ subject, children }: ThreadProps) {
 
 function List({ children }: { children: (thread: Thread) => React.ReactNode }) {
   const { threads, isLoading, isError, error, refetch } = useThread();
+  const shouldReduce = useReducedMotion();
 
   if (isLoading) {
     return (
@@ -151,9 +152,30 @@ function List({ children }: { children: (thread: Thread) => React.ReactNode }) {
   }
 
   return (
-    <section aria-label="Comments" className="space-y-6">
-      {threads.map((thread) => children(thread))}
-    </section>
+    <motion.section
+      aria-label="Comments"
+      className="space-y-6"
+      initial="hidden"
+      animate="visible"
+      transition={{
+        staggerChildren: shouldReduce ? 0 : 0.04,
+        delayChildren: 0,
+        staggerDirection: 1,
+      }}
+    >
+      {threads.map((thread, i) => (
+        <motion.div
+          key={thread.root.id}
+          variants={{
+            hidden: i < 6 ? { opacity: 0 } : { opacity: 1 },
+            visible: { opacity: 1 },
+          }}
+          transition={shouldReduce ? { duration: 0 } : { duration: 0.15, ease: "easeOut" }}
+        >
+          {children(thread)}
+        </motion.div>
+      ))}
+    </motion.section>
   );
 }
 
@@ -162,7 +184,34 @@ function List({ children }: { children: (thread: Thread) => React.ReactNode }) {
 // ---------------------------------------------------------------------------
 
 function Item({ comment, children }: { comment: Comment; children: React.ReactNode }) {
-  return <ItemContext.Provider value={{ comment }}>{children}</ItemContext.Provider>;
+  const shouldReduce = useReducedMotion();
+  const isReply = !!comment.parentId;
+
+  return (
+    <ItemContext.Provider value={{ comment }}>
+      <motion.article
+        className={isReply ? "mb-3 last:mb-0 overflow-hidden" : "overflow-hidden"}
+        initial={isReply ? { opacity: 0, transform: "translateY(-4px)" } : undefined}
+        animate={{ opacity: 1, transform: "none" }}
+        exit={
+          isReply
+            ? { opacity: 0, height: 0 }
+            : undefined
+        }
+        transition={
+          shouldReduce
+            ? { duration: 0 }
+            : {
+                opacity: { duration: 0.18, ease: "easeOut" },
+                transform: { duration: 0.18, ease: "easeOut" },
+                height: { duration: 0.15 },
+              }
+        }
+      >
+        {children}
+      </motion.article>
+    </ItemContext.Provider>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -250,7 +299,9 @@ function Actions() {
 
 function Replies({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative ml-[14px] border-l border-border pl-4 pt-2">{children}</div>
+    <div className="relative ml-[14px] border-l border-border pl-4 pt-2">
+      <AnimatePresence>{children}</AnimatePresence>
+    </div>
   );
 }
 
@@ -259,13 +310,21 @@ function Replies({ children }: { children: React.ReactNode }) {
 // ---------------------------------------------------------------------------
 
 function Composer({ parentId }: { parentId?: string }) {
-  const { subject, setOpenReplyId } = useThread();
-  const { isOpen, getContentProps } = useDisclosure({
+  const { subject, setOpenReplyId, openReplyId } = useThread();
+  const { isOpen, getContentProps, open, close } = useDisclosure({
     defaultOpen: !parentId, // root composer always open
     onOpenChange: (open) => {
-      if (!open && parentId) setOpenReplyId(null);
+      if (!open && parentId && openReplyId === parentId) setOpenReplyId(null);
     },
   });
+
+  // Sync disclosure with context: the Actions button sets openReplyId,
+  // but useDisclosure manages its own state independently.
+  useEffect(() => {
+    if (!parentId) return;
+    if (openReplyId === parentId) open();
+    else close();
+  }, [parentId, openReplyId, open, close]);
   const { mutate: create, isPending, error, reset } = useCreateComment(subject);
   const shouldReduce = useReducedMotion();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -336,7 +395,7 @@ function Composer({ parentId }: { parentId?: string }) {
     <AnimatePresence initial={false}>
       {isOpen && (
         <motion.div
-          key="reply-composer"
+          key={composerId}
           {...getContentProps(composerId ? { id: composerId } as React.HTMLAttributes<HTMLElement> : {})}
           hidden={undefined}
           className="overflow-hidden"

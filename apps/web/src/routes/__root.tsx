@@ -83,27 +83,23 @@ export const RootLayout = () => {
           <Thread.Composer />
           <Thread.List>
             {(thread) => (
-              <article key={thread.root.id}>
-                <Thread.Item comment={thread.root}>
-                  <Thread.Header />
-                  <Thread.Body />
-                  <Thread.Actions />
-                  {thread.replies.length > 0 && (
-                    <Thread.Replies>
-                      {thread.replies.map((reply) => (
-                        <article key={reply.id} className="mb-3 last:mb-0">
-                          <Thread.Item comment={reply}>
-                            <Thread.Header />
-                            <Thread.Body />
-                            <Thread.Actions />
-                          </Thread.Item>
-                        </article>
-                      ))}
-                    </Thread.Replies>
-                  )}
-                  <Thread.Composer parentId={thread.root.id} />
-                </Thread.Item>
-              </article>
+              <Thread.Item key={thread.root.id} comment={thread.root}>
+                <Thread.Header />
+                <Thread.Body />
+                <Thread.Actions />
+                {thread.replies.length > 0 && (
+                  <Thread.Replies>
+                    {thread.replies.map((reply) => (
+                      <Thread.Item key={reply.id} comment={reply}>
+                        <Thread.Header />
+                        <Thread.Body />
+                        <Thread.Actions />
+                      </Thread.Item>
+                    ))}
+                  </Thread.Replies>
+                )}
+                <Thread.Composer parentId={thread.root.id} />
+              </Thread.Item>
             )}
           </Thread.List>
         </Thread>
